@@ -1,3 +1,12 @@
+## 0.0.2 (2022-02-10)
+
+- Bump stable-ish version
+- Tests added to CI/CD
+- Sample files for `/search` endpoint responses
+- Tests updated to be up to date (100% :)
+- `thingy.authenticate()` delayed
+- `term_library` and `autocomplete` delayed. Need to figure out API
+
 ## 0.0.2a2 (2022-02-10)
 
 - Github Actions tweak
