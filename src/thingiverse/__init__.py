@@ -1,8 +1,7 @@
 from thingiverse.types.exceptions import (
-    SearchException, ThingiverseException, UnathenticatedException)
+    SearchException, UnathenticatedException)
 from thingiverse.types.search import SearchResponse
-from typing import Optional, Text
-# from requests.models import Response
+from typing import Text
 from box import Box
 import requests
 import logging
@@ -23,7 +22,7 @@ class Thingiverse(object):
         <SearchResult   >
         """
         if not access_token:
-            exception = ThingiverseException("'access_token' not provided")
+            exception = UnathenticatedException("'access_token' not provided")
             logging.exception(exception)
             raise exception
         self.base_url = "https://api.thingiverse.com"
@@ -31,45 +30,44 @@ class Thingiverse(object):
         self.access_token = access_token
         logging.info("Thingiverse initialized.")
 
-    def authorize(self,
-                  client_id: Text,
-                  redirect_uri: Optional[Text] = None,
-                  response_type: Optional[Text] = None):
-        """Authorizes the client given a clientId
+    # TODO
+    # def authorize(self,
+    #               client_id: Text,
+    #               redirect_uri: Optional[Text] = None,
+    #               response_type: Optional[Text] = None):
+    #     """Authorizes the client given a clientId
 
-        :param client_id: The Thingiverse App Client ID
-        :param redirect_url: The Thingiverse App redirect URL
-        :param response_type: The OAuth response type. Defaults to 'code' by Thingiverse API
+    #     :param client_id: The Thingiverse App Client ID
+    #     :param redirect_url: The Thingiverse App redirect URL
+    #     :param response_type: The OAuth response type. Defaults to 'code' by Thingiverse API
 
-        Usage:
-        >>> from thingiverse import Thingiverse
-        >>> thingy = Thingiverse(access_token="abc")
-        >>> thingy.authorize(client_id="abc",
-                             redirect_uri="https://example.com",
-                             response_type="token")
-        """
-        url = self.oauth_url + f"?client_id={client_id}"
-        if redirect_uri:
-            url += f"&redirect_url={redirect_uri}"
-        if response_type:
-            url += f"&response_type={response_type}"
+    #     Usage:
+    #     >>> from thingiverse import Thingiverse
+    #     >>> thingy = Thingiverse(access_token="abc")
+    #     >>> thingy.authorize(client_id="abc",
+    #                          redirect_uri="https://example.com",
+    #                          response_type="token")
+    #     """
+    #     url = self.oauth_url + f"?client_id={client_id}"
+    #     if redirect_uri:
+    #         url += f"&redirect_url={redirect_uri}"
+    #     if response_type:
+    #         url += f"&response_type={response_type}"
 
-        print(url)
+    #     print(url)
 
-        res = requests.get(url, allow_redirects=True)
-        print("URL")
-        print(res.url)
-        if res.url != url:
-            new_res = requests.get(res.url, allow_redirects=True)
-            print("New res")
-            print(new_res.url)
+    #     res = requests.get(url, allow_redirects=True)
+    #     print("URL")
+    #     print(res.url)
+    #     if res.url != url:
+    #         new_res = requests.get(res.url, allow_redirects=True)
+    #         print("New res")
+    #         print(new_res.url)
 
-        return res
+    #     return res
 
     def search_term(self,
-                    term: Text = None,
-                    term_library: bool = False,
-                    autocomplete: bool = False) -> SearchResponse:
+                    term: Text = None) -> SearchResponse:
         """Searches for a term on Thingiverse
 
         :param term: term to search for
@@ -87,36 +85,18 @@ class Thingiverse(object):
             exception = SearchException("'term' is required")
             logging.exception(exception)
             raise exception
-        if not self.access_token:
-            exception = UnathenticatedException("'access_token' is required")
-            logging.exception(exception)
-            raise exception
+
         access_token_param = f"?access_token={self.access_token}"
         path = f"/search/{term}"
-        if term_library and autocomplete:
-            raise SearchException(
-                "Both 'term_library' and 'autocomplete' cannot be True, only pick one.")
-        if term_library:
-            logging.info("Searching for term's library.")
-            path += "/library"
-        if autocomplete:
-            logging.info("Autocompleting search for term.")
-            path += "/autocomplete"
 
         url = self.base_url + path + access_token_param
+        logging.info(f"Making search term request to {url}")
+        res = requests.get(url)
+        res_json = res.json()
+        search_box = Box(res_json)
+        logging.info(f"Successfully retrieved search results for term {term}")
 
-        try:
-            logging.info(f"Making search term request to {url}")
-            res = requests.get(url)
-            res_json = res.json()
-            search_box = Box(res_json)
-            logging.info(f"Successfully retrieved search results for term {term}")
-
-            return search_box
-        except Exception as e:
-            logging.debug("Error searching for term")
-            logging.exception(e)
-            raise e
+        return search_box
 
     def search_tag(self, tag: Text = None) -> SearchResponse:
         """Searches for a tag on Thingiverse
@@ -132,24 +112,15 @@ class Thingiverse(object):
             exception = SearchException("'tag' is required")
             logging.exception(exception)
             raise exception
-        if not self.access_token:
-            exception = UnathenticatedException("'access_token' is required")
-            logging.exception(exception)
-            raise exception
+
         access_token_param = f"?access_token={self.access_token}"
         path = f"/search/{tag}/tag"
 
         url = self.base_url + path + access_token_param
+        logging.info(f"Making search tag request to {url}")
+        res = requests.get(url)
+        res_json = res.json()
+        search_box = Box(res_json)
+        logging.info(f"Successfully retrieved search results for term {tag}")
 
-        try:
-            logging.info(f"Making search tag request to {url}")
-            res = requests.get(url)
-            res_json = res.json()
-            search_box = Box(res_json)
-            logging.info(f"Successfully retrieved search results for term {tag}")
-
-            return search_box
-        except Exception as e:
-            logging.debug("Error searching for tag")
-            logging.exception(e)
-            raise e
+        return search_box
