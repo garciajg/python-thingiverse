@@ -1,3 +1,7 @@
+## 0.0.2a2 (2022-02-10)
+
+- Github Actions tweak
+
 ## 0.0.2a1 (2022-02-10)
 
 - Version bump

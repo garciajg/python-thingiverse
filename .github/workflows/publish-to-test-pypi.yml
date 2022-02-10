@@ -2,6 +2,7 @@ name: Publish PreRelease to TestPyPI 🐍
 
 on: 
   release:
+    types: [published]
     branches:
       - "main"
 jobs:
