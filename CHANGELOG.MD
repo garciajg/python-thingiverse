@@ -1,4 +1,4 @@
-## 0.0.1a (2022-02-10)
+## 0.0.1a4 (2022-02-10)
 
 - `access_token` added as part of `Thingiverse` object.
 
