@@ -1,19 +1,15 @@
-
-
-
+from thingiverse.types.search import SearchResponse
 from typing import Optional, Text
 from requests.models import Response
 from box import Box
 import requests
 
-from thingiverse.types.search import SearchResponse
-
 
 class Thingiverse(object):
-    def __init__(self):
+    def __init__(self, access_token=None):
         self.base_url = "https://api.thingiverse.com"
         self.oauth_url = "https://www.thingiverse.com/login/oauth/authorize"
-        self.access_token = "bf62d0cf23790de6d78acd2657550be3"
+        self.access_token = access_token
 
     def authorize(self,
                   client_id: Text,

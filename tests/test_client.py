@@ -13,8 +13,10 @@ class TestAuth(TestCase):
         pass
 
     def test_search(self):
-        thingy = Thingiverse()
+        thingy = Thingiverse(access_token="bf62d0cf23790de6d78acd2657550be3")
         search_res = thingy.search("RPi 4")
 
-        with open("search_res.json", "w") as f:
+        with open("search_res_two.json", "w") as f:
             json.dump(search_res, f)
+        assert search_res.total != 0
+        assert search_res.hits

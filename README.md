@@ -26,7 +26,8 @@ python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps examp
 
 - [ ] Docstrings
 - [ ] OAuth working
-- [ ] CI/CD
-- [ ] Tests
+- [X] CI/CD
+- [ ] Look into autoversioning
+- [X] Tests (started)
 - [ ] README
 - [ ] Think of documentation hosting

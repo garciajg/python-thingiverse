@@ -1,6 +1,11 @@
+## 0.0.1a (2022-02-10)
+
+- `access_token` added as part of `Thingiverse` object.
+
 ## 0.0.1a3 (2022-02-10)
 
-- Version bump
+- `development` branch created,
+- Github Actions tweaked to only run on `main` branch.
 
 
 ## 0.0.1a2 (2022-02-10)

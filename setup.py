@@ -23,13 +23,13 @@ requirements = [
 
 setuptools.setup(
     name="python-thingiverse",
-    version="0.0.1a3",
+    version="0.0.1a4",
     author="Jose Garcia",
     author_email="jose.garcia@vokal.io",
     description="A Python Thingiverse REST API wrapper.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/garciajg/python-thingiverser",
+    url="https://github.com/garciajg/python-thingiverse",
     project_urls={
         "Bug Tracker": "https://github.com/garciajg/python-thingiverser/issues",
     },
