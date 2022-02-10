@@ -45,20 +45,20 @@ jobs:
         poetry publish -r test-pypi
     
 
-    - name: Publish distribution 📦 to Test PyPI
-      uses: coveooss/pypi-publish-with-poetry@v1.0.0
-      with:
-        project-name: my-project-name
-        # For deployment to Official PyPI, just comment next line
-        # and replace TEST_PYPI_API_TOKEN
-        repository_url: https://test.pypi.org/legacy/
-        pypi-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
+    # - name: Publish distribution 📦 to Test PyPI
+    #   uses: coveooss/pypi-publish-with-poetry@v1.0.0
+    #   with:
+    #     project-name: my-project-name
+    #     # For deployment to Official PyPI, just comment next line
+    #     # and replace TEST_PYPI_API_TOKEN
+    #     repository_url: https://test.pypi.org/legacy/
+    #     pypi-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
 
-    - name: Publish distribution 📦 to Test PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+    # - name: Publish distribution 📦 to Test PyPI
+    #   uses: pypa/gh-action-pypi-publish@master
+    #   with:
+    #     password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+    #     repository_url: https://test.pypi.org/legacy/
     # - name: Publish distribution 📦 to PyPI
     #   if: startsWith(github.ref, 'refs/tags')
     #   uses: pypa/gh-action-pypi-publish@master
