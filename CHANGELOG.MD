@@ -1,3 +1,7 @@
+## 0.0.2 (2022-02-10)
+
+- Version bump
+
 ## 0.0.1a4 (2022-02-10)
 
 - `access_token` added as part of `Thingiverse` object.
