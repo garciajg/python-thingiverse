@@ -32,7 +32,9 @@ jobs:
     
     - name: Install poetry
       run: |
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - && source $HOME/.bash_profile
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    - name: Poetry version
+      run: source $HOME/.profile && poetry --version
     - name: Install Requirements
       run: poetry install
     - name: Building Package ⏳
