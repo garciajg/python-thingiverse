@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-thingiverse"
-version = "0.0.3a1"
+version = "0.0.4"
 description = "A Python Thingiverse REST API wrapper"
 authors = ["Jose Garcia <maton.pg@gmail.com>"]
 packages = [
