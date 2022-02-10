@@ -23,7 +23,7 @@ requirements = [
 
 setuptools.setup(
     name="python-thingiverse",
-    version="0.0.1a2",
+    version="0.0.1a3",
     author="Jose Garcia",
     author_email="jose.garcia@vokal.io",
     description="A Python Thingiverse REST API wrapper.",
