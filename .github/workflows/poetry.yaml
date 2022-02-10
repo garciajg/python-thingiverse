@@ -23,6 +23,7 @@ jobs:
   build-n-publish:
     name: Build and publish PreRelease to TestPyPI 🐍
     runs-on: ubuntu-20.04
+    needs: [test]
     steps:
     - uses: actions/checkout@master
     - uses: abatilo/actions-poetry@v2.0.0
@@ -30,10 +31,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.9
-    
-    # - name: Install poetry
-    #   run: |
-    #     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+
     - name: Poetry version
       run: poetry --version
     - name: Install Requirements
@@ -45,7 +43,7 @@ jobs:
         poetry config pypi-token.test-pypi ${{ secrets.TEST_PYPI_API_TOKEN }}
     - name: Publishing 🚀
       run: |
-        poetry publish -r test-pypi
+        poetry publish -r pypi-token.test-pypi
     
 
     # - name: Publish distribution 📦 to Test PyPI
