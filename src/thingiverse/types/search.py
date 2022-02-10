@@ -50,4 +50,3 @@ class SearchResult(TypedDict):
 class SearchResponse(TypedDict):
     total: int
     hits: List[SearchResult]
-

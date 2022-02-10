@@ -14,7 +14,7 @@ def load_requirements():
 
 requirements = [
     "certifi==2021.10.8", "charset-normalizer==2.0.11",
-    "idna==3.3","requests==2.27.1","urllib3==1.26.8",
+    "idna==3.3", "requests==2.27.1", "urllib3==1.26.8",
     "python-box==5.4.1", "nose==1.3.7", "coverage==6.3.1",
     "mypy==0.931", "mypy-extensions==0.4.3", "tomli==2.0.1",
     "types-requests==2.27.9", "types-urllib3==1.26.9"
