@@ -1,6 +1,9 @@
 name: Publish PreRelease to TestPyPI 🐍
 
-on: push
+on: 
+  push:
+    branches:
+      - "main"
 jobs:
   build-n-publish:
     name: Build and publish PreRelease to TestPyPI 🐍
