@@ -1,7 +1,12 @@
 [tool.poetry]
 name = "python-thingiverse"
 version = "0.0.5rc2"
+readme = "README.md"
+documentation = "https://garciajg.github.io/python-thingiverse/"
+homepage = "https://garciajg.github.io/python-thingiverse/"
+repository = "https://github.com/garciajg/python-thingiverse"
 description = "A Python Thingiverse REST API wrapper"
+keywords = ["thingiverse", "wrapper"]
 authors = ["Jose Garcia <maton.pg@gmail.com>"]
 packages = [
     { include = "thingiverse" }
