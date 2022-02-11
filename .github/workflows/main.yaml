@@ -1,9 +1,10 @@
 name: Publish PreRelease to TestPyPI 🐍
 
 on: 
-  push:
+  release:
+    types: [published]
     branches:
-      - "poetry"
+      - "main"
 jobs:
   test:
     name: "Run unit tests, lint, and type checking"
@@ -39,6 +40,5 @@ jobs:
       run: poetry build
     - name: Publishing 🚀
       run: |
-        poetry config repositories.test-pypi https://test.pypi.org/legacy/ 
-        poetry config pypi-token.test-pypi ${{ secrets.TEST_PYPI_API_TOKEN }} 
-        poetry publish -r test-pypi
+        poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }} 
+        poetry publish
