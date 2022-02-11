@@ -1,3 +1,8 @@
+## 0.0.5rc3 (2022-02-11)
+
+- DOCS HOSTED!
+- `pyproject.toml` updated
+
 ## 0.0.5rc2 (2022-02-10)
 
 - Host-able documentation added
