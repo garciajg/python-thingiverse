@@ -3,6 +3,7 @@ from typing import Optional, Text, TypedDict, List
 
 
 class Creator(TypedDict):
+    """A creator of a resource like a Thing"""
     id: int
     name: Text
     first_name: Text
@@ -20,6 +21,7 @@ class Creator(TypedDict):
 
 
 class Tag(TypedDict):
+    """A Thingiverse Tag"""
     name: Text
     tag: Text
     url: Text
@@ -29,6 +31,7 @@ class Tag(TypedDict):
 
 
 class SearchResult(TypedDict):
+    """Search response result"""
     id: int
     name: Text
     url: Text
@@ -48,5 +51,6 @@ class SearchResult(TypedDict):
 
 
 class SearchResponse(TypedDict):
+    """Response from a `/search` endpoint call"""
     total: int
     hits: List[SearchResult]

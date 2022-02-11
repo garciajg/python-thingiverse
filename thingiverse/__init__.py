@@ -1,9 +1,10 @@
-__version__ = '0.1.0'
+__version__ = "0.0.5rc2"
 
 from thingiverse.types.exceptions import (
-    SearchException, UnathenticatedException)
+    ResourceNotFound, SearchException,
+    ThingiverseException, UnathenticatedException)
 from thingiverse.types.search import SearchResponse
-from typing import Text
+from typing import Dict, List, Optional, Text, Union
 from box import Box
 import requests
 import logging
@@ -68,6 +69,109 @@ class Thingiverse(object):
 
     #     return res
 
+    def get_thing_by_id(self, thing_id: int = None):
+        """Gets a thing by {thing_id}
+
+        :param thing_id: id of the thing to get
+
+        Usage:
+        >>> from thingiverse import Thingiverse
+        >>> thingy = Thingiverse(access_token="abc")
+        >>> thing = thingy.thing_by_id(thing_id=123)
+        """
+
+        if not thing_id:
+            exception = ThingiverseException("'thing_id' is required")
+            logging.exception(exception)
+            raise exception
+
+        access_token_param = f"?access_token={self.access_token}"
+        path = f"/things/{thing_id}/"
+
+        url = self.base_url + path + access_token_param
+        logging.info(f"Making request to get thing by id: {thing_id}")
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f"Thing with id {thing_id} not found.")
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f"Unknown error: {res.json()}")
+            logging.error(f"Error requesting url:\n\t{url}")
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        thing_box = Box(res_json)
+        logging.info(f"Successfully retrieved thing with id {thing_id}")
+
+        return thing_box
+
+    def get_images_by_thing(self,
+                            thing_id: int = None,
+                            image_id: Optional[int] = None,
+                            image_type: Optional[Text] = None,
+                            image_size: Optional[Text] = None) -> Union[Dict, List]:
+        """Gets image(s) for a thing
+
+        :param thing_id: thing to fetch images for
+        :param image_id: optional - if not given, an array of images will be returned
+        :param image_type: optional - image type to look for
+        :param image_size: optional - image size to look for
+
+        Usage:
+        >>> from thingiverse import Thingiverse
+        >>> thingy = Thingiverse(access_token="abc")
+        >>> images = thingy.get_images_for_thing(thing_id=1234)
+        >>> image = thingy.get_images_for_thing(thing_id=1234, image_id=4321)
+        """
+        if not thing_id:
+            exception = ThingiverseException("'thing_id' is required")
+            logging.exception(exception)
+            raise exception
+
+        if image_size and not image_type:
+            # based on their API Docs `type` is required if umage_size is given
+            # https://www.thingiverse.com/developers/rest-api-reference#things
+            exception = ThingiverseException("'image_type' is required is 'image_size' is given")
+            logging.exception(exception)
+            raise exception
+
+        access_token_param = f"?access_token={self.access_token}"
+        path = f"/things/{thing_id}/images/"
+
+        if image_id:
+            path += str(image_id)
+
+        path += access_token_param
+        if image_size:
+            path + f"&size={image_size}"
+
+        if image_type:
+            path += f"&type={image_type}"
+
+        url = self.base_url + path
+        logging.info(f"Making request to get thing by id: {thing_id}")
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f"Thing with id {thing_id} not found.")
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f"Unknown error: {res.json()}")
+            logging.error(f"Error requesting url:\n\t{url}")
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        # images_box = Box(res_json)
+        logging.info(f"Successfully images for thing with id {thing_id}")
+
+        return res_json
+
+    # Search endpoints
     def search_term(self,
                     term: Text = None) -> SearchResponse:
         """Searches for a term on Thingiverse
