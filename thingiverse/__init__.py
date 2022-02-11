@@ -1,3 +1,5 @@
+__version__ = '0.1.0'
+
 from thingiverse.types.exceptions import (
     SearchException, UnathenticatedException)
 from thingiverse.types.search import SearchResponse

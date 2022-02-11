@@ -1,3 +1,11 @@
+## 0.0.5rc1 (2022-02-10)
+
+- Bump version
+- Poetry manages package now
+- CI/CD for `development` to Test PyPI
+- CI/CD from `main` to Official PyPI
+- ...Everything in between `0.0.5rc1` and `0.0.2` was testing was testing...
+
 ## 0.0.2 (2022-02-10)
 
 - Bump stable-ish version
