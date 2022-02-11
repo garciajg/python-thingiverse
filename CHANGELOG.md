@@ -1,3 +1,10 @@
+## 0.0.5rc2 (2022-02-10)
+
+- Host-able documentation added
+- Endpoints added
+  - thing by id
+  - thing images by id
+
 ## 0.0.5rc1 (2022-02-10)
 
 - Bump version
