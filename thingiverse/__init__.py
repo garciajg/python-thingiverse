@@ -1,4 +1,4 @@
-__version__ = "0.0.5rc2"
+__version__ = "0.0.5rc3"
 
 from thingiverse.types.exceptions import (
     ResourceNotFound, SearchException,
