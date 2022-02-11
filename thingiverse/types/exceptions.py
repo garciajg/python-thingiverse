@@ -9,3 +9,7 @@ class ThingiverseException(Exception):
 
 class UnathenticatedException(Exception):
     pass
+
+
+class ResourceNotFound(Exception):
+    pass
