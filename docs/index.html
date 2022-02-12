@@ -26,7 +26,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">__version__ = &#34;0.0.5rc2&#34;
+<pre><code class="python">__version__ = &#34;0.0.6rc1&#34;
 
 from thingiverse.types.exceptions import (
     ResourceNotFound, SearchException,
@@ -100,7 +100,9 @@ class Thingiverse(object):
     def get_thing_by_id(self, thing_id: int = None):
         &#34;&#34;&#34;Gets a thing by {thing_id}
 
-        :param thing_id: id of the thing to get
+        Parameters
+        ----------
+        thing_id (int): id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -353,7 +355,9 @@ class Thingiverse(object):
     def get_thing_by_id(self, thing_id: int = None):
         &#34;&#34;&#34;Gets a thing by {thing_id}
 
-        :param thing_id: id of the thing to get
+        Parameters
+        ----------
+        thing_id (int): id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -515,7 +519,7 @@ class Thingiverse(object):
 <h3>Methods</h3>
 <dl>
 <dt id="thingiverse.Thingiverse.get_images_by_thing"><code class="name flex">
-<span>def <span class="ident">get_images_by_thing</span></span>(<span>self, thing_id: int = None, image_id: Optional[int] = None, image_type: Optional[str] = None, image_size: Optional[str] = None) ‑> Union[Dict[~KT, ~VT], List[~T]]</span>
+<span>def <span class="ident">get_images_by_thing</span></span>(<span>self, thing_id: int = None, image_id: Optional[int] = None, image_type: Optional[str] = None, image_size: Optional[str] = None) ‑> Union[Dict, List]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets image(s) for a thing</p>
@@ -602,7 +606,8 @@ class Thingiverse(object):
 </code></dt>
 <dd>
 <div class="desc"><p>Gets a thing by {thing_id}</p>
-<p>:param thing_id: id of the thing to get</p>
+<h2 id="parameters">Parameters</h2>
+<p>thing_id (int): id of the thing to get</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -615,7 +620,9 @@ class Thingiverse(object):
 <pre><code class="python">def get_thing_by_id(self, thing_id: int = None):
     &#34;&#34;&#34;Gets a thing by {thing_id}
 
-    :param thing_id: id of the thing to get
+    Parameters
+    ----------
+    thing_id (int): id of the thing to get
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse

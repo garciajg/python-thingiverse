@@ -4,6 +4,12 @@ from thingiverse.types.exceptions import (
 )
 from thingiverse import Thingiverse
 from unittest import TestCase
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+ACCESS_TOKEN = os.getenv("THINGI_ACCESS_TOKEN")
+assert ACCESS_TOKEN
 
 
 class TestSearch(TestCase):
@@ -19,7 +25,7 @@ class TestSearch(TestCase):
 
     def test_fetching_thing_by_id(self):
         """Test get_thing_by_id() method"""
-        thingy = Thingiverse(access_token="bf62d0cf23790de6d78acd2657550be3")
+        thingy = Thingiverse(access_token=ACCESS_TOKEN)
         # Searching without thing_id (Should fail)
         with self.assertRaises(ThingiverseException) as raised:
             thingy.get_thing_by_id()
@@ -46,7 +52,7 @@ class TestSearch(TestCase):
     def test_fetching_images_by_thing(self):
         """Test get_images_by_thing() method"""
         thing_id = 922740
-        thingy = Thingiverse(access_token="bf62d0cf23790de6d78acd2657550be3")
+        thingy = Thingiverse(access_token=ACCESS_TOKEN)
 
         # Fetching without thing_id (Should fail)
         with self.assertRaises(ThingiverseException) as raised:
@@ -88,7 +94,7 @@ class TestSearch(TestCase):
 
     def test_search_term(self):
         """Test search_term() method"""
-        thingy = Thingiverse(access_token="bf62d0cf23790de6d78acd2657550be3")
+        thingy = Thingiverse(access_token=ACCESS_TOKEN)
         # Searching without term (Should fail)
         with self.assertRaises(SearchException) as raised:
             thingy.search_term()
@@ -102,7 +108,7 @@ class TestSearch(TestCase):
 
     def test_search_tag(self):
         """Test search_tag() method"""
-        thingy = Thingiverse(access_token="bf62d0cf23790de6d78acd2657550be3")
+        thingy = Thingiverse(access_token=ACCESS_TOKEN)
         # Searching without tag (Should fail)
         with self.assertRaises(SearchException) as raised:
             thingy.search_tag()

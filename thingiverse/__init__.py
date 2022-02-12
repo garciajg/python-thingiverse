@@ -1,4 +1,4 @@
-__version__ = "0.0.5"
+__version__ = "0.0.6rc1"
 
 from thingiverse.types.exceptions import (
     ResourceNotFound, SearchException,
@@ -72,7 +72,9 @@ class Thingiverse(object):
     def get_thing_by_id(self, thing_id: int = None):
         """Gets a thing by {thing_id}
 
-        :param thing_id: id of the thing to get
+        Parameters
+        ----------
+        thing_id (int): id of the thing to get
 
         Usage:
         >>> from thingiverse import Thingiverse
