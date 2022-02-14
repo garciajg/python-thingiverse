@@ -1,5 +1,6 @@
 # 0.0.6rc1.dev (2022-02-14)
 
+- `.dev` versioning started :)
 - `ACCESS_TOKEN` added to tests
 - `README.md` updated with documentation link and TODOs
 - `get_user_by_username()` method added (`/users/{username}/`)
