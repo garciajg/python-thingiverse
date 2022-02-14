@@ -1,5 +1,9 @@
 # Python Thingiverse
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/garciajg/python-thingiverse.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/garciajg/python-thingiverse/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/garciajg/python-thingiverse.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/garciajg/python-thingiverse/context:python)
+
+
 NOT OFFICIAL. This is only a Python wrapper for Thingiverse REST API.
 
 This project was started in Feb 10 2022. It is still being developed and improved. To see the Test PyPI package, check it [here](https://test.pypi.org/project/python-thingiverse/).
