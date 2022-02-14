@@ -5,3 +5,6 @@ test:
 
 docss:
 	tox -e generate-docs
+
+poetry-add-reqs:
+	cat requirements.txt|xargs poetry add
