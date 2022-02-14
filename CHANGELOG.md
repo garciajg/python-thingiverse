@@ -1,4 +1,4 @@
-# 0.0.6rc1 (2022-02-14)
+# 0.0.6rc1.dev (2022-02-14)
 
 - `ACCESS_TOKEN` added to tests
 - `README.md` updated with documentation link and TODOs
