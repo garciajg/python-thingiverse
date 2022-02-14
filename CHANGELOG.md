@@ -1,3 +1,16 @@
+# 0.0.6rc1.dev (2022-02-14)
+
+- `.dev` versioning started :)
+- `ACCESS_TOKEN` added to tests
+- `README.md` updated with documentation link and TODOs
+- `get_user_by_username()` method added (`/users/{username}/`)
+  - Fetches a user's information
+  - Model added `thingivers.types.users.ThingiverseUser`
+  - Tests added
+- `get_users_data()` method added (`/users/{username}/search/{term?}`)
+  - Fetches user's things data
+  - Tests added
+
 ## 0.0.5 (2022-02-11)
 
 - Version bump

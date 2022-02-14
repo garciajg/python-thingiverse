@@ -26,16 +26,18 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">__version__ = &#34;0.0.5rc2&#34;
+<pre><code class="python">__version__ = &#34;0.0.6rc1.dev&#34;
 
 from thingiverse.types.exceptions import (
     ResourceNotFound, SearchException,
-    ThingiverseException, UnathenticatedException)
+    ThingiverseException, UnathenticatedException, UserException)
 from thingiverse.types.search import SearchResponse
+from thingiverse.types.users import ThingiverseUser
 from typing import Dict, List, Optional, Text, Union
 from box import Box
 import requests
 import logging
+
 
 logging.basicConfig(format=&#39;%(asctime)s |%(levelname)s|%(message)s&#39;)
 
@@ -44,7 +46,10 @@ class Thingiverse(object):
     def __init__(self, access_token=None):
         &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt; object.
 
-        :param access_token: Thingiverse access_token after OAuth2
+        Parameters
+        ----------
+
+        access_token (str): Thingiverse access_token after OAuth2
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -97,10 +102,91 @@ class Thingiverse(object):
 
     #     return res
 
+    def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
+        &#34;&#34;&#34;Get user personal information by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for. (Default &#34;me&#34;)
+
+        Usage:
+        &gt;&gt;&gt; from thingiverse import Thingiverse
+        &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+        &gt;&gt;&gt; user = thingy.get_user_by_username(username=&#34;me&#34;)
+        &#34;&#34;&#34;
+        access_token_param = f&#34;?access_token={self.access_token}&#34;
+        path = f&#34;/users/{username}/&#34;
+
+        url = self.base_url + path + access_token_param
+        logging.info(f&#34;Making request to get user by username: {username}&#34;)
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f&#34;User with username {username} not found.&#34;)
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+            logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        user_box = Box(res_json)
+        logging.info(f&#34;Successfully retrieved user with username {username}&#34;)
+
+        return user_box
+
+    def get_users_data(self, username: Text = None, term: Text = None):
+        &#34;&#34;&#34;Get user things data by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for
+
+        term (str): The search query to perform
+
+        Usage:
+        &gt;&gt;&gt; from thingiverse import Thingiverse
+        &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+        &gt;&gt;&gt; user = thingy.get_users_data(username=&#34;m4t0n&#34;, term=&#34;RPi&#34;)
+        &#34;&#34;&#34;
+        if not username:
+            exception = UserException(&#34;&#39;username&#39; is required&#34;)
+            logging.exception(exception)
+            raise exception
+
+        access_token_param = f&#34;?access_token={self.access_token}&#34;
+        path = f&#34;/users/{username}/search&#34;
+        if term:
+            path += f&#34;/{term}&#34;
+
+        url = self.base_url + path + access_token_param
+        logging.info(f&#34;Making request to get username data: {username}; term: {term}&#34;)
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f&#34;Username with username {username} not found.&#34;)
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+            logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        thing_box = Box(res_json)
+        logging.info(f&#34;Successfully retrieved user data with username {username}&#34;)
+
+        return thing_box
+
     def get_thing_by_id(self, thing_id: int = None):
         &#34;&#34;&#34;Gets a thing by {thing_id}
 
-        :param thing_id: id of the thing to get
+        Parameters
+        ----------
+        thing_id (int): id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -143,10 +229,15 @@ class Thingiverse(object):
                             image_size: Optional[Text] = None) -&gt; Union[Dict, List]:
         &#34;&#34;&#34;Gets image(s) for a thing
 
-        :param thing_id: thing to fetch images for
-        :param image_id: optional - if not given, an array of images will be returned
-        :param image_type: optional - image type to look for
-        :param image_size: optional - image size to look for
+        Parameters
+        ----------
+        thing_id (int): thing to fetch images for
+
+        image_id (int): optional - if not given, an array of images will be returned
+
+        image_type (str): optional - image type to look for
+
+        image_size (str): optional - image size to look for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -204,9 +295,14 @@ class Thingiverse(object):
                     term: Text = None) -&gt; SearchResponse:
         &#34;&#34;&#34;Searches for a term on Thingiverse
 
-        :param term: term to search for
-        :param term_library: will be requesting libraries for term
-        :param autocomplete: will be requesting autocomplete endpoint
+        Parameters
+        ----------
+
+        term (str): term to search for
+
+        term_library (bool): will be requesting libraries for term
+
+        autocomplete (bool): will be requesting autocomplete endpoint
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -235,7 +331,10 @@ class Thingiverse(object):
     def search_tag(self, tag: Text = None) -&gt; SearchResponse:
         &#34;&#34;&#34;Searches for a tag on Thingiverse
 
-        :param tag: tag to search for
+        Parameters
+        ----------
+
+        tag (str): tag to search for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -282,7 +381,8 @@ class Thingiverse(object):
 </code></dt>
 <dd>
 <div class="desc"><p>A user-created :class:`Thingiverse <Thingiverse> object.</p>
-<p>:param access_token: Thingiverse access_token after OAuth2</p>
+<h2 id="parameters">Parameters</h2>
+<p>access_token (str): Thingiverse access_token after OAuth2</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -297,7 +397,10 @@ class Thingiverse(object):
     def __init__(self, access_token=None):
         &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt; object.
 
-        :param access_token: Thingiverse access_token after OAuth2
+        Parameters
+        ----------
+
+        access_token (str): Thingiverse access_token after OAuth2
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -350,10 +453,91 @@ class Thingiverse(object):
 
     #     return res
 
+    def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
+        &#34;&#34;&#34;Get user personal information by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for. (Default &#34;me&#34;)
+
+        Usage:
+        &gt;&gt;&gt; from thingiverse import Thingiverse
+        &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+        &gt;&gt;&gt; user = thingy.get_user_by_username(username=&#34;me&#34;)
+        &#34;&#34;&#34;
+        access_token_param = f&#34;?access_token={self.access_token}&#34;
+        path = f&#34;/users/{username}/&#34;
+
+        url = self.base_url + path + access_token_param
+        logging.info(f&#34;Making request to get user by username: {username}&#34;)
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f&#34;User with username {username} not found.&#34;)
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+            logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        user_box = Box(res_json)
+        logging.info(f&#34;Successfully retrieved user with username {username}&#34;)
+
+        return user_box
+
+    def get_users_data(self, username: Text = None, term: Text = None):
+        &#34;&#34;&#34;Get user things data by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for
+
+        term (str): The search query to perform
+
+        Usage:
+        &gt;&gt;&gt; from thingiverse import Thingiverse
+        &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+        &gt;&gt;&gt; user = thingy.get_users_data(username=&#34;m4t0n&#34;, term=&#34;RPi&#34;)
+        &#34;&#34;&#34;
+        if not username:
+            exception = UserException(&#34;&#39;username&#39; is required&#34;)
+            logging.exception(exception)
+            raise exception
+
+        access_token_param = f&#34;?access_token={self.access_token}&#34;
+        path = f&#34;/users/{username}/search&#34;
+        if term:
+            path += f&#34;/{term}&#34;
+
+        url = self.base_url + path + access_token_param
+        logging.info(f&#34;Making request to get username data: {username}; term: {term}&#34;)
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f&#34;Username with username {username} not found.&#34;)
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+            logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        thing_box = Box(res_json)
+        logging.info(f&#34;Successfully retrieved user data with username {username}&#34;)
+
+        return thing_box
+
     def get_thing_by_id(self, thing_id: int = None):
         &#34;&#34;&#34;Gets a thing by {thing_id}
 
-        :param thing_id: id of the thing to get
+        Parameters
+        ----------
+        thing_id (int): id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -396,10 +580,15 @@ class Thingiverse(object):
                             image_size: Optional[Text] = None) -&gt; Union[Dict, List]:
         &#34;&#34;&#34;Gets image(s) for a thing
 
-        :param thing_id: thing to fetch images for
-        :param image_id: optional - if not given, an array of images will be returned
-        :param image_type: optional - image type to look for
-        :param image_size: optional - image size to look for
+        Parameters
+        ----------
+        thing_id (int): thing to fetch images for
+
+        image_id (int): optional - if not given, an array of images will be returned
+
+        image_type (str): optional - image type to look for
+
+        image_size (str): optional - image size to look for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -457,9 +646,14 @@ class Thingiverse(object):
                     term: Text = None) -&gt; SearchResponse:
         &#34;&#34;&#34;Searches for a term on Thingiverse
 
-        :param term: term to search for
-        :param term_library: will be requesting libraries for term
-        :param autocomplete: will be requesting autocomplete endpoint
+        Parameters
+        ----------
+
+        term (str): term to search for
+
+        term_library (bool): will be requesting libraries for term
+
+        autocomplete (bool): will be requesting autocomplete endpoint
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -488,7 +682,10 @@ class Thingiverse(object):
     def search_tag(self, tag: Text = None) -&gt; SearchResponse:
         &#34;&#34;&#34;Searches for a tag on Thingiverse
 
-        :param tag: tag to search for
+        Parameters
+        ----------
+
+        tag (str): tag to search for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -515,14 +712,15 @@ class Thingiverse(object):
 <h3>Methods</h3>
 <dl>
 <dt id="thingiverse.Thingiverse.get_images_by_thing"><code class="name flex">
-<span>def <span class="ident">get_images_by_thing</span></span>(<span>self, thing_id: int = None, image_id: Optional[int] = None, image_type: Optional[str] = None, image_size: Optional[str] = None) ‑> Union[Dict[~KT, ~VT], List[~T]]</span>
+<span>def <span class="ident">get_images_by_thing</span></span>(<span>self, thing_id: int = None, image_id: Optional[int] = None, image_type: Optional[str] = None, image_size: Optional[str] = None) ‑> Union[Dict, List]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets image(s) for a thing</p>
-<p>:param thing_id: thing to fetch images for
-:param image_id: optional - if not given, an array of images will be returned
-:param image_type: optional - image type to look for
-:param image_size: optional - image size to look for</p>
+<h2 id="parameters">Parameters</h2>
+<p>thing_id (int): thing to fetch images for</p>
+<p>image_id (int): optional - if not given, an array of images will be returned</p>
+<p>image_type (str): optional - image type to look for</p>
+<p>image_size (str): optional - image size to look for</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -540,10 +738,15 @@ class Thingiverse(object):
                         image_size: Optional[Text] = None) -&gt; Union[Dict, List]:
     &#34;&#34;&#34;Gets image(s) for a thing
 
-    :param thing_id: thing to fetch images for
-    :param image_id: optional - if not given, an array of images will be returned
-    :param image_type: optional - image type to look for
-    :param image_size: optional - image size to look for
+    Parameters
+    ----------
+    thing_id (int): thing to fetch images for
+
+    image_id (int): optional - if not given, an array of images will be returned
+
+    image_type (str): optional - image type to look for
+
+    image_size (str): optional - image size to look for
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -602,7 +805,8 @@ class Thingiverse(object):
 </code></dt>
 <dd>
 <div class="desc"><p>Gets a thing by {thing_id}</p>
-<p>:param thing_id: id of the thing to get</p>
+<h2 id="parameters">Parameters</h2>
+<p>thing_id (int): id of the thing to get</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -615,7 +819,9 @@ class Thingiverse(object):
 <pre><code class="python">def get_thing_by_id(self, thing_id: int = None):
     &#34;&#34;&#34;Gets a thing by {thing_id}
 
-    :param thing_id: id of the thing to get
+    Parameters
+    ----------
+    thing_id (int): id of the thing to get
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -652,12 +858,127 @@ class Thingiverse(object):
     return thing_box</code></pre>
 </details>
 </dd>
+<dt id="thingiverse.Thingiverse.get_user_by_username"><code class="name flex">
+<span>def <span class="ident">get_user_by_username</span></span>(<span>self, username: str = 'me') ‑> <a title="thingiverse.types.users.ThingiverseUser" href="types/users.html#thingiverse.types.users.ThingiverseUser">ThingiverseUser</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get user personal information by {username}</p>
+<h2 id="paramenters">Paramenters</h2>
+<p>username (str): Username to fetch for. (Default "me")</p>
+<p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
+&gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
+&gt;&gt;&gt; user = thingy.get_user_by_username(username=&quot;me&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
+    &#34;&#34;&#34;Get user personal information by {username}
+
+    Paramenters
+    -----------
+    username (str): Username to fetch for. (Default &#34;me&#34;)
+
+    Usage:
+    &gt;&gt;&gt; from thingiverse import Thingiverse
+    &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+    &gt;&gt;&gt; user = thingy.get_user_by_username(username=&#34;me&#34;)
+    &#34;&#34;&#34;
+    access_token_param = f&#34;?access_token={self.access_token}&#34;
+    path = f&#34;/users/{username}/&#34;
+
+    url = self.base_url + path + access_token_param
+    logging.info(f&#34;Making request to get user by username: {username}&#34;)
+    res = requests.get(url)
+
+    if res.status_code == 404:
+        exception = ResourceNotFound(f&#34;User with username {username} not found.&#34;)
+        logging.exception(exception)
+        raise exception
+    elif res.status_code != 200:
+        exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+        logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+        logging.exception(exception)
+        raise exception
+
+    res_json = res.json()
+    user_box = Box(res_json)
+    logging.info(f&#34;Successfully retrieved user with username {username}&#34;)
+
+    return user_box</code></pre>
+</details>
+</dd>
+<dt id="thingiverse.Thingiverse.get_users_data"><code class="name flex">
+<span>def <span class="ident">get_users_data</span></span>(<span>self, username: str = None, term: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get user things data by {username}</p>
+<h2 id="paramenters">Paramenters</h2>
+<p>username (str): Username to fetch for</p>
+<p>term (str): The search query to perform</p>
+<p>Usage:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
+&gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
+&gt;&gt;&gt; user = thingy.get_users_data(username=&quot;m4t0n&quot;, term=&quot;RPi&quot;)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_users_data(self, username: Text = None, term: Text = None):
+    &#34;&#34;&#34;Get user things data by {username}
+
+    Paramenters
+    -----------
+    username (str): Username to fetch for
+
+    term (str): The search query to perform
+
+    Usage:
+    &gt;&gt;&gt; from thingiverse import Thingiverse
+    &gt;&gt;&gt; thingy = Thingiverse(access_token=&#34;abc&#34;)
+    &gt;&gt;&gt; user = thingy.get_users_data(username=&#34;m4t0n&#34;, term=&#34;RPi&#34;)
+    &#34;&#34;&#34;
+    if not username:
+        exception = UserException(&#34;&#39;username&#39; is required&#34;)
+        logging.exception(exception)
+        raise exception
+
+    access_token_param = f&#34;?access_token={self.access_token}&#34;
+    path = f&#34;/users/{username}/search&#34;
+    if term:
+        path += f&#34;/{term}&#34;
+
+    url = self.base_url + path + access_token_param
+    logging.info(f&#34;Making request to get username data: {username}; term: {term}&#34;)
+    res = requests.get(url)
+
+    if res.status_code == 404:
+        exception = ResourceNotFound(f&#34;Username with username {username} not found.&#34;)
+        logging.exception(exception)
+        raise exception
+    elif res.status_code != 200:
+        exception = ThingiverseException(f&#34;Unknown error: {res.json()}&#34;)
+        logging.error(f&#34;Error requesting url:\n\t{url}&#34;)
+        logging.exception(exception)
+        raise exception
+
+    res_json = res.json()
+    thing_box = Box(res_json)
+    logging.info(f&#34;Successfully retrieved user data with username {username}&#34;)
+
+    return thing_box</code></pre>
+</details>
+</dd>
 <dt id="thingiverse.Thingiverse.search_tag"><code class="name flex">
 <span>def <span class="ident">search_tag</span></span>(<span>self, tag: str = None) ‑> <a title="thingiverse.types.search.SearchResponse" href="types/search.html#thingiverse.types.search.SearchResponse">SearchResponse</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Searches for a tag on Thingiverse</p>
-<p>:param tag: tag to search for</p>
+<h2 id="parameters">Parameters</h2>
+<p>tag (str): tag to search for</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -670,7 +991,10 @@ class Thingiverse(object):
 <pre><code class="python">def search_tag(self, tag: Text = None) -&gt; SearchResponse:
     &#34;&#34;&#34;Searches for a tag on Thingiverse
 
-    :param tag: tag to search for
+    Parameters
+    ----------
+
+    tag (str): tag to search for
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -700,9 +1024,10 @@ class Thingiverse(object):
 </code></dt>
 <dd>
 <div class="desc"><p>Searches for a term on Thingiverse</p>
-<p>:param term: term to search for
-:param term_library: will be requesting libraries for term
-:param autocomplete: will be requesting autocomplete endpoint</p>
+<h2 id="parameters">Parameters</h2>
+<p>term (str): term to search for</p>
+<p>term_library (bool): will be requesting libraries for term</p>
+<p>autocomplete (bool): will be requesting autocomplete endpoint</p>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -718,9 +1043,14 @@ class Thingiverse(object):
                 term: Text = None) -&gt; SearchResponse:
     &#34;&#34;&#34;Searches for a term on Thingiverse
 
-    :param term: term to search for
-    :param term_library: will be requesting libraries for term
-    :param autocomplete: will be requesting autocomplete endpoint
+    Parameters
+    ----------
+
+    term (str): term to search for
+
+    term_library (bool): will be requesting libraries for term
+
+    autocomplete (bool): will be requesting autocomplete endpoint
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -770,6 +1100,8 @@ class Thingiverse(object):
 <ul class="">
 <li><code><a title="thingiverse.Thingiverse.get_images_by_thing" href="#thingiverse.Thingiverse.get_images_by_thing">get_images_by_thing</a></code></li>
 <li><code><a title="thingiverse.Thingiverse.get_thing_by_id" href="#thingiverse.Thingiverse.get_thing_by_id">get_thing_by_id</a></code></li>
+<li><code><a title="thingiverse.Thingiverse.get_user_by_username" href="#thingiverse.Thingiverse.get_user_by_username">get_user_by_username</a></code></li>
+<li><code><a title="thingiverse.Thingiverse.get_users_data" href="#thingiverse.Thingiverse.get_users_data">get_users_data</a></code></li>
 <li><code><a title="thingiverse.Thingiverse.search_tag" href="#thingiverse.Thingiverse.search_tag">search_tag</a></code></li>
 <li><code><a title="thingiverse.Thingiverse.search_term" href="#thingiverse.Thingiverse.search_term">search_term</a></code></li>
 </ul>
