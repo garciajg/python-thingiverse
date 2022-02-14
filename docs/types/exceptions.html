@@ -43,6 +43,11 @@ class UnathenticatedException(Exception):
 
 class ResourceNotFound(Exception):
     &#34;&#34;&#34;Used when a resource like a Thing isn&#39;t found&#34;&#34;&#34;
+    pass
+
+
+class UserException(Exception):
+    &#34;&#34;&#34;Used when something went wrong when searching&#34;&#34;&#34;
     pass</code></pre>
 </details>
 </section>
@@ -135,6 +140,26 @@ class ResourceNotFound(Exception):
 <li>builtins.BaseException</li>
 </ul>
 </dd>
+<dt id="thingiverse.types.exceptions.UserException"><code class="flex name class">
+<span>class <span class="ident">UserException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Used when something went wrong when searching</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserException(Exception):
+    &#34;&#34;&#34;Used when something went wrong when searching&#34;&#34;&#34;
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
 </dl>
 </section>
 </article>
@@ -162,6 +187,9 @@ class ResourceNotFound(Exception):
 </li>
 <li>
 <h4><code><a title="thingiverse.types.exceptions.UnathenticatedException" href="#thingiverse.types.exceptions.UnathenticatedException">UnathenticatedException</a></code></h4>
+</li>
+<li>
+<h4><code><a title="thingiverse.types.exceptions.UserException" href="#thingiverse.types.exceptions.UserException">UserException</a></code></h4>
 </li>
 </ul>
 </li>
