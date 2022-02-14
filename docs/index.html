@@ -44,12 +44,12 @@ logging.basicConfig(format=&#39;%(asctime)s |%(levelname)s|%(message)s&#39;)
 
 class Thingiverse(object):
     def __init__(self, access_token=None):
-        &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt; object.
+        &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt;` object.
 
         Parameters
         ----------
-
-        access_token (str): Thingiverse access_token after OAuth2
+        access_token : str
+            Thingiverse access_token after OAuth2
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -103,11 +103,12 @@ class Thingiverse(object):
     #     return res
 
     def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
-        &#34;&#34;&#34;Get user personal information by {username}
+        &#34;&#34;&#34;Get user personal information by `username`
 
-        Paramenters
-        -----------
-        username (str): Username to fetch for. (Default &#34;me&#34;)
+        Parameters
+        ----------
+        username : str, default=&#34;me&#34;
+            Username to fetch for.
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -138,13 +139,14 @@ class Thingiverse(object):
         return user_box
 
     def get_users_data(self, username: Text = None, term: Text = None):
-        &#34;&#34;&#34;Get user things data by {username}
+        &#34;&#34;&#34;Get user things data by `username`
 
-        Paramenters
+        Parameters
         -----------
-        username (str): Username to fetch for
-
-        term (str): The search query to perform
+        username: str
+            Username to fetch for
+        term: str
+            The search query to perform
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -182,11 +184,12 @@ class Thingiverse(object):
         return thing_box
 
     def get_thing_by_id(self, thing_id: int = None):
-        &#34;&#34;&#34;Gets a thing by {thing_id}
+        &#34;&#34;&#34;Gets a thing by `thing_id`
 
         Parameters
         ----------
-        thing_id (int): id of the thing to get
+        thing_id: int
+            id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -231,13 +234,17 @@ class Thingiverse(object):
 
         Parameters
         ----------
-        thing_id (int): thing to fetch images for
+        thing_id: int
+            Thing to fetch images for
 
-        image_id (int): optional - if not given, an array of images will be returned
+        image_id: int, optional
+            If not given, an array of images will be returned
 
-        image_type (str): optional - image type to look for
+        image_type: str, optional
+            Image type to look for
 
-        image_size (str): optional - image size to look for
+        image_size: str, optional
+            Image size to look for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -297,12 +304,14 @@ class Thingiverse(object):
 
         Parameters
         ----------
+        term: str
+            Term to search for
 
-        term (str): term to search for
+        term_library: bool
+            Will be requesting libraries for term
 
-        term_library (bool): will be requesting libraries for term
-
-        autocomplete (bool): will be requesting autocomplete endpoint
+        autocomplete: bool
+            Will be requesting autocomplete endpoint
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -334,7 +343,8 @@ class Thingiverse(object):
         Parameters
         ----------
 
-        tag (str): tag to search for
+        tag: str
+            Tag to search for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -380,9 +390,12 @@ class Thingiverse(object):
 <span>(</span><span>access_token=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A user-created :class:`Thingiverse <Thingiverse> object.</p>
+<div class="desc"><p>A user-created :class:<code>Thingiverse &lt;Thingiverse&gt;</code> object.</p>
 <h2 id="parameters">Parameters</h2>
-<p>access_token (str): Thingiverse access_token after OAuth2</p>
+<dl>
+<dt><strong><code>access_token</code></strong> :&ensp;<code>str</code></dt>
+<dd>Thingiverse access_token after OAuth2</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -395,12 +408,12 @@ class Thingiverse(object):
 </summary>
 <pre><code class="python">class Thingiverse(object):
     def __init__(self, access_token=None):
-        &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt; object.
+        &#34;&#34;&#34;A user-created :class:`Thingiverse &lt;Thingiverse&gt;` object.
 
         Parameters
         ----------
-
-        access_token (str): Thingiverse access_token after OAuth2
+        access_token : str
+            Thingiverse access_token after OAuth2
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -454,11 +467,12 @@ class Thingiverse(object):
     #     return res
 
     def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
-        &#34;&#34;&#34;Get user personal information by {username}
+        &#34;&#34;&#34;Get user personal information by `username`
 
-        Paramenters
-        -----------
-        username (str): Username to fetch for. (Default &#34;me&#34;)
+        Parameters
+        ----------
+        username : str, default=&#34;me&#34;
+            Username to fetch for.
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -489,13 +503,14 @@ class Thingiverse(object):
         return user_box
 
     def get_users_data(self, username: Text = None, term: Text = None):
-        &#34;&#34;&#34;Get user things data by {username}
+        &#34;&#34;&#34;Get user things data by `username`
 
-        Paramenters
+        Parameters
         -----------
-        username (str): Username to fetch for
-
-        term (str): The search query to perform
+        username: str
+            Username to fetch for
+        term: str
+            The search query to perform
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -533,11 +548,12 @@ class Thingiverse(object):
         return thing_box
 
     def get_thing_by_id(self, thing_id: int = None):
-        &#34;&#34;&#34;Gets a thing by {thing_id}
+        &#34;&#34;&#34;Gets a thing by `thing_id`
 
         Parameters
         ----------
-        thing_id (int): id of the thing to get
+        thing_id: int
+            id of the thing to get
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -582,13 +598,17 @@ class Thingiverse(object):
 
         Parameters
         ----------
-        thing_id (int): thing to fetch images for
+        thing_id: int
+            Thing to fetch images for
 
-        image_id (int): optional - if not given, an array of images will be returned
+        image_id: int, optional
+            If not given, an array of images will be returned
 
-        image_type (str): optional - image type to look for
+        image_type: str, optional
+            Image type to look for
 
-        image_size (str): optional - image size to look for
+        image_size: str, optional
+            Image size to look for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -648,12 +668,14 @@ class Thingiverse(object):
 
         Parameters
         ----------
+        term: str
+            Term to search for
 
-        term (str): term to search for
+        term_library: bool
+            Will be requesting libraries for term
 
-        term_library (bool): will be requesting libraries for term
-
-        autocomplete (bool): will be requesting autocomplete endpoint
+        autocomplete: bool
+            Will be requesting autocomplete endpoint
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -685,7 +707,8 @@ class Thingiverse(object):
         Parameters
         ----------
 
-        tag (str): tag to search for
+        tag: str
+            Tag to search for
 
         Usage:
         &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -717,10 +740,16 @@ class Thingiverse(object):
 <dd>
 <div class="desc"><p>Gets image(s) for a thing</p>
 <h2 id="parameters">Parameters</h2>
-<p>thing_id (int): thing to fetch images for</p>
-<p>image_id (int): optional - if not given, an array of images will be returned</p>
-<p>image_type (str): optional - image type to look for</p>
-<p>image_size (str): optional - image size to look for</p>
+<dl>
+<dt><strong><code>thing_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>Thing to fetch images for</dd>
+<dt><strong><code>image_id</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>If not given, an array of images will be returned</dd>
+<dt><strong><code>image_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Image type to look for</dd>
+<dt><strong><code>image_size</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Image size to look for</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -740,13 +769,17 @@ class Thingiverse(object):
 
     Parameters
     ----------
-    thing_id (int): thing to fetch images for
+    thing_id: int
+        Thing to fetch images for
 
-    image_id (int): optional - if not given, an array of images will be returned
+    image_id: int, optional
+        If not given, an array of images will be returned
 
-    image_type (str): optional - image type to look for
+    image_type: str, optional
+        Image type to look for
 
-    image_size (str): optional - image size to look for
+    image_size: str, optional
+        Image size to look for
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -804,9 +837,12 @@ class Thingiverse(object):
 <span>def <span class="ident">get_thing_by_id</span></span>(<span>self, thing_id: int = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Gets a thing by {thing_id}</p>
+<div class="desc"><p>Gets a thing by <code>thing_id</code></p>
 <h2 id="parameters">Parameters</h2>
-<p>thing_id (int): id of the thing to get</p>
+<dl>
+<dt><strong><code>thing_id</code></strong> :&ensp;<code>int</code></dt>
+<dd>id of the thing to get</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -817,11 +853,12 @@ class Thingiverse(object):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_thing_by_id(self, thing_id: int = None):
-    &#34;&#34;&#34;Gets a thing by {thing_id}
+    &#34;&#34;&#34;Gets a thing by `thing_id`
 
     Parameters
     ----------
-    thing_id (int): id of the thing to get
+    thing_id: int
+        id of the thing to get
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -862,9 +899,12 @@ class Thingiverse(object):
 <span>def <span class="ident">get_user_by_username</span></span>(<span>self, username: str = 'me') ‑> <a title="thingiverse.types.users.ThingiverseUser" href="types/users.html#thingiverse.types.users.ThingiverseUser">ThingiverseUser</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get user personal information by {username}</p>
-<h2 id="paramenters">Paramenters</h2>
-<p>username (str): Username to fetch for. (Default "me")</p>
+<div class="desc"><p>Get user personal information by <code>username</code></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code>, default=<code>"me"</code></dt>
+<dd>Username to fetch for.</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -875,11 +915,12 @@ class Thingiverse(object):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_user_by_username(self, username: Text = &#34;me&#34;) -&gt; ThingiverseUser:
-    &#34;&#34;&#34;Get user personal information by {username}
+    &#34;&#34;&#34;Get user personal information by `username`
 
-    Paramenters
-    -----------
-    username (str): Username to fetch for. (Default &#34;me&#34;)
+    Parameters
+    ----------
+    username : str, default=&#34;me&#34;
+        Username to fetch for.
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -914,10 +955,14 @@ class Thingiverse(object):
 <span>def <span class="ident">get_users_data</span></span>(<span>self, username: str = None, term: str = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get user things data by {username}</p>
-<h2 id="paramenters">Paramenters</h2>
-<p>username (str): Username to fetch for</p>
-<p>term (str): The search query to perform</p>
+<div class="desc"><p>Get user things data by <code>username</code></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>Username to fetch for</dd>
+<dt><strong><code>term</code></strong> :&ensp;<code>str</code></dt>
+<dd>The search query to perform</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -928,13 +973,14 @@ class Thingiverse(object):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_users_data(self, username: Text = None, term: Text = None):
-    &#34;&#34;&#34;Get user things data by {username}
+    &#34;&#34;&#34;Get user things data by `username`
 
-    Paramenters
+    Parameters
     -----------
-    username (str): Username to fetch for
-
-    term (str): The search query to perform
+    username: str
+        Username to fetch for
+    term: str
+        The search query to perform
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -978,7 +1024,10 @@ class Thingiverse(object):
 <dd>
 <div class="desc"><p>Searches for a tag on Thingiverse</p>
 <h2 id="parameters">Parameters</h2>
-<p>tag (str): tag to search for</p>
+<dl>
+<dt><strong><code>tag</code></strong> :&ensp;<code>str</code></dt>
+<dd>Tag to search for</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -994,7 +1043,8 @@ class Thingiverse(object):
     Parameters
     ----------
 
-    tag (str): tag to search for
+    tag: str
+        Tag to search for
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse
@@ -1025,9 +1075,14 @@ class Thingiverse(object):
 <dd>
 <div class="desc"><p>Searches for a term on Thingiverse</p>
 <h2 id="parameters">Parameters</h2>
-<p>term (str): term to search for</p>
-<p>term_library (bool): will be requesting libraries for term</p>
-<p>autocomplete (bool): will be requesting autocomplete endpoint</p>
+<dl>
+<dt><strong><code>term</code></strong> :&ensp;<code>str</code></dt>
+<dd>Term to search for</dd>
+<dt><strong><code>term_library</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Will be requesting libraries for term</dd>
+<dt><strong><code>autocomplete</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Will be requesting autocomplete endpoint</dd>
+</dl>
 <p>Usage:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from thingiverse import Thingiverse
 &gt;&gt;&gt; thingy = Thingiverse(access_token=&quot;abc&quot;)
@@ -1045,12 +1100,14 @@ class Thingiverse(object):
 
     Parameters
     ----------
+    term: str
+        Term to search for
 
-    term (str): term to search for
+    term_library: bool
+        Will be requesting libraries for term
 
-    term_library (bool): will be requesting libraries for term
-
-    autocomplete (bool): will be requesting autocomplete endpoint
+    autocomplete: bool
+        Will be requesting autocomplete endpoint
 
     Usage:
     &gt;&gt;&gt; from thingiverse import Thingiverse

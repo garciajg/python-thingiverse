@@ -16,12 +16,12 @@ logging.basicConfig(format='%(asctime)s |%(levelname)s|%(message)s')
 
 class Thingiverse(object):
     def __init__(self, access_token=None):
-        """A user-created :class:`Thingiverse <Thingiverse> object.
+        """A user-created :class:`Thingiverse <Thingiverse>` object.
 
         Parameters
         ----------
-
-        access_token (str): Thingiverse access_token after OAuth2
+        access_token : str
+            Thingiverse access_token after OAuth2
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -75,11 +75,12 @@ class Thingiverse(object):
     #     return res
 
     def get_user_by_username(self, username: Text = "me") -> ThingiverseUser:
-        """Get user personal information by {username}
+        """Get user personal information by `username`
 
-        Paramenters
-        -----------
-        username (str): Username to fetch for. (Default "me")
+        Parameters
+        ----------
+        username : str, default="me"
+            Username to fetch for.
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -110,13 +111,14 @@ class Thingiverse(object):
         return user_box
 
     def get_users_data(self, username: Text = None, term: Text = None):
-        """Get user things data by {username}
+        """Get user things data by `username`
 
-        Paramenters
+        Parameters
         -----------
-        username (str): Username to fetch for
-
-        term (str): The search query to perform
+        username: str
+            Username to fetch for
+        term: str
+            The search query to perform
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -154,11 +156,12 @@ class Thingiverse(object):
         return thing_box
 
     def get_thing_by_id(self, thing_id: int = None):
-        """Gets a thing by {thing_id}
+        """Gets a thing by `thing_id`
 
         Parameters
         ----------
-        thing_id (int): id of the thing to get
+        thing_id: int
+            id of the thing to get
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -203,13 +206,17 @@ class Thingiverse(object):
 
         Parameters
         ----------
-        thing_id (int): thing to fetch images for
+        thing_id: int
+            Thing to fetch images for
 
-        image_id (int): optional - if not given, an array of images will be returned
+        image_id: int, optional
+            If not given, an array of images will be returned
 
-        image_type (str): optional - image type to look for
+        image_type: str, optional
+            Image type to look for
 
-        image_size (str): optional - image size to look for
+        image_size: str, optional
+            Image size to look for
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -269,12 +276,14 @@ class Thingiverse(object):
 
         Parameters
         ----------
+        term: str
+            Term to search for
 
-        term (str): term to search for
+        term_library: bool
+            Will be requesting libraries for term
 
-        term_library (bool): will be requesting libraries for term
-
-        autocomplete (bool): will be requesting autocomplete endpoint
+        autocomplete: bool
+            Will be requesting autocomplete endpoint
 
         Usage:
         >>> from thingiverse import Thingiverse
@@ -306,7 +315,8 @@ class Thingiverse(object):
         Parameters
         ----------
 
-        tag (str): tag to search for
+        tag: str
+            Tag to search for
 
         Usage:
         >>> from thingiverse import Thingiverse

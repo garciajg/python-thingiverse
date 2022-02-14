@@ -31,7 +31,8 @@ from typing import Optional, Text, TypedDict, List
 from thingiverse.types.search import Creator
 
 
-class CurrentApp(TypedDict):
+class ThingiverseApp(TypedDict):
+    &#34;&#34;&#34;Thingiverse app&#34;&#34;&#34;
     id: int
     name: Text
     url: Text
@@ -82,7 +83,7 @@ class ThingiverseUser(TypedDict):
     favorite_count: int
     is_admin: bool
     default_license: Text
-    current_app: CurrentApp</code></pre>
+    current_app: ThingiverseApp</code></pre>
 </details>
 </section>
 <section>
@@ -94,27 +95,18 @@ class ThingiverseUser(TypedDict):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="thingiverse.types.users.CurrentApp"><code class="flex name class">
-<span>class <span class="ident">CurrentApp</span></span>
+<dt id="thingiverse.types.users.ThingiverseApp"><code class="flex name class">
+<span>class <span class="ident">ThingiverseApp</span></span>
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>dict() -&gt; new empty dictionary
-dict(mapping) -&gt; new dictionary initialized from a mapping object's
-(key, value) pairs
-dict(iterable) -&gt; new dictionary initialized as if via:
-d = {}
-for k, v in iterable:
-d[k] = v
-dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
-in the keyword argument list.
-For example:
-dict(one=1, two=2)</p></div>
+<div class="desc"><p>Thingiverse app</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class CurrentApp(TypedDict):
+<pre><code class="python">class ThingiverseApp(TypedDict):
+    &#34;&#34;&#34;Thingiverse app&#34;&#34;&#34;
     id: int
     name: Text
     url: Text
@@ -130,35 +122,35 @@ dict(one=1, two=2)</p></div>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="thingiverse.types.users.CurrentApp.creator"><code class="name">var <span class="ident">creator</span> : <a title="thingiverse.types.search.Creator" href="search.html#thingiverse.types.search.Creator">Creator</a></code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.creator"><code class="name">var <span class="ident">creator</span> : <a title="thingiverse.types.search.Creator" href="search.html#thingiverse.types.search.Creator">Creator</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.is_approved"><code class="name">var <span class="ident">is_approved</span> : bool</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.is_approved"><code class="name">var <span class="ident">is_approved</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.is_published"><code class="name">var <span class="ident">is_published</span> : bool</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.is_published"><code class="name">var <span class="ident">is_published</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.public_url"><code class="name">var <span class="ident">public_url</span> : str</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.public_url"><code class="name">var <span class="ident">public_url</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.thumbnail"><code class="name">var <span class="ident">thumbnail</span> : str</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.thumbnail"><code class="name">var <span class="ident">thumbnail</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.CurrentApp.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dt id="thingiverse.types.users.ThingiverseApp.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -214,7 +206,7 @@ dict(one=1, two=2)</p></div>
     favorite_count: int
     is_admin: bool
     default_license: Text
-    current_app: CurrentApp</code></pre>
+    current_app: ThingiverseApp</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -262,7 +254,7 @@ dict(one=1, two=2)</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="thingiverse.types.users.ThingiverseUser.current_app"><code class="name">var <span class="ident">current_app</span> : <a title="thingiverse.types.users.CurrentApp" href="#thingiverse.types.users.CurrentApp">CurrentApp</a></code></dt>
+<dt id="thingiverse.types.users.ThingiverseUser.current_app"><code class="name">var <span class="ident">current_app</span> : <a title="thingiverse.types.users.ThingiverseApp" href="#thingiverse.types.users.ThingiverseApp">ThingiverseApp</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -397,16 +389,16 @@ dict(one=1, two=2)</p></div>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="thingiverse.types.users.CurrentApp" href="#thingiverse.types.users.CurrentApp">CurrentApp</a></code></h4>
+<h4><code><a title="thingiverse.types.users.ThingiverseApp" href="#thingiverse.types.users.ThingiverseApp">ThingiverseApp</a></code></h4>
 <ul class="two-column">
-<li><code><a title="thingiverse.types.users.CurrentApp.creator" href="#thingiverse.types.users.CurrentApp.creator">creator</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.id" href="#thingiverse.types.users.CurrentApp.id">id</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.is_approved" href="#thingiverse.types.users.CurrentApp.is_approved">is_approved</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.is_published" href="#thingiverse.types.users.CurrentApp.is_published">is_published</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.name" href="#thingiverse.types.users.CurrentApp.name">name</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.public_url" href="#thingiverse.types.users.CurrentApp.public_url">public_url</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.thumbnail" href="#thingiverse.types.users.CurrentApp.thumbnail">thumbnail</a></code></li>
-<li><code><a title="thingiverse.types.users.CurrentApp.url" href="#thingiverse.types.users.CurrentApp.url">url</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.creator" href="#thingiverse.types.users.ThingiverseApp.creator">creator</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.id" href="#thingiverse.types.users.ThingiverseApp.id">id</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.is_approved" href="#thingiverse.types.users.ThingiverseApp.is_approved">is_approved</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.is_published" href="#thingiverse.types.users.ThingiverseApp.is_published">is_published</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.name" href="#thingiverse.types.users.ThingiverseApp.name">name</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.public_url" href="#thingiverse.types.users.ThingiverseApp.public_url">public_url</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.thumbnail" href="#thingiverse.types.users.ThingiverseApp.thumbnail">thumbnail</a></code></li>
+<li><code><a title="thingiverse.types.users.ThingiverseApp.url" href="#thingiverse.types.users.ThingiverseApp.url">url</a></code></li>
 </ul>
 </li>
 <li>
