@@ -17,3 +17,8 @@ class UnathenticatedException(Exception):
 class ResourceNotFound(Exception):
     """Used when a resource like a Thing isn't found"""
     pass
+
+
+class UserException(Exception):
+    """Used when something went wrong when searching"""
+    pass

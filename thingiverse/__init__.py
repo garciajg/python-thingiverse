@@ -2,12 +2,14 @@ __version__ = "0.0.6rc1"
 
 from thingiverse.types.exceptions import (
     ResourceNotFound, SearchException,
-    ThingiverseException, UnathenticatedException)
+    ThingiverseException, UnathenticatedException, UserException)
 from thingiverse.types.search import SearchResponse
+from thingiverse.types.users import ThingiverseUser
 from typing import Dict, List, Optional, Text, Union
 from box import Box
 import requests
 import logging
+
 
 logging.basicConfig(format='%(asctime)s |%(levelname)s|%(message)s')
 
@@ -68,6 +70,84 @@ class Thingiverse(object):
     #         print(new_res.url)
 
     #     return res
+
+    def get_user_by_username(self, username: Text = "me") -> ThingiverseUser:
+        """Get user by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for. (Default "me")
+
+        Usage:
+        >>> from thingiverse import Thingiverse
+        >>> thingy = Thingiverse(access_token="abc")
+        >>> user = thingy.get_user_by_username(username="me")
+        """
+        access_token_param = f"?access_token={self.access_token}"
+        path = f"/users/{username}/"
+
+        url = self.base_url + path + access_token_param
+        logging.info(f"Making request to get user by username: {username}")
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f"User with username {username} not found.")
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f"Unknown error: {res.json()}")
+            logging.error(f"Error requesting url:\n\t{url}")
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        user_box = Box(res_json)
+        logging.info(f"Successfully retrieved user with username {username}")
+
+        return user_box
+
+    def get_users_data(self, username: Text = None, term: Text = None):
+        """Get user by {username}
+
+        Paramenters
+        -----------
+        username (str): Username to fetch for
+        term (str): The search query to perform
+
+        Usage:
+        >>> from thingiverse import Thingiverse
+        >>> thingy = Thingiverse(access_token="abc")
+        >>> user = thingy.get_users_data(username="m4t0n", term="RPi")
+        """
+        if not username:
+            exception = UserException("'username' is required")
+            logging.exception(exception)
+            raise exception
+
+        access_token_param = f"?access_token={self.access_token}"
+        path = f"/users/{username}/search"
+        if term:
+            path += f"/{term}"
+
+        url = self.base_url + path + access_token_param
+        logging.info(f"Making request to get username data: {username}; term: {term}")
+        res = requests.get(url)
+
+        if res.status_code == 404:
+            exception = ResourceNotFound(f"Username with username {username} not found.")
+            logging.exception(exception)
+            raise exception
+        elif res.status_code != 200:
+            exception = ThingiverseException(f"Unknown error: {res.json()}")
+            logging.error(f"Error requesting url:\n\t{url}")
+            logging.exception(exception)
+            raise exception
+
+        res_json = res.json()
+        thing_box = Box(res_json)
+        logging.info(f"Successfully retrieved user data with username {username}")
+
+        return thing_box
 
     def get_thing_by_id(self, thing_id: int = None):
         """Gets a thing by {thing_id}
