@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-thingiverse"
-version = "0.0.6rc1.dev"
+version = "0.0.7.dev"
 readme = "README.md"
 documentation = "https://garciajg.github.io/python-thingiverse/"
 homepage = "https://garciajg.github.io/python-thingiverse/"
