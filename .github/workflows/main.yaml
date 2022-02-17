@@ -23,7 +23,7 @@ jobs:
       - name: Running tests
         run: make test
   build-n-publish:
-    name: Build and publish PreRelease to TestPyPI 🐍
+    name: Build and publish Release to PyPI 🐍
     runs-on: ubuntu-20.04
     needs: [test]
     steps:
