@@ -4,7 +4,8 @@ from typing import Optional, Text, TypedDict, List
 from thingiverse.types.search import Creator
 
 
-class CurrentApp(TypedDict):
+class ThingiverseApp(TypedDict):
+    """Thingiverse app"""
     id: int
     name: Text
     url: Text
@@ -55,4 +56,4 @@ class ThingiverseUser(TypedDict):
     favorite_count: int
     is_admin: bool
     default_license: Text
-    current_app: CurrentApp
+    current_app: ThingiverseApp
